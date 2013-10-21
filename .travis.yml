@@ -2,7 +2,7 @@ env:
   - GHCVER=7.4.2
   - GHCVER=7.6.3
   - GHCVER=head
-  - mode=
+
 matrix:
   allow_failures:
     - env: GHCVER=head
@@ -15,10 +15,11 @@ before_install:
 
 install:
   - cabal-1.18 update
-  - cabal-1.18 install --only-dependencies --enable-tests --enable-benchmarks
+  - cabal-1.18 install "happy>=1.17"
+  - cabal-1.18 install --only-dependencies --enable-tests
 
 script:
-  - cabal-1.18 configure -v2 --enable-tests --enable-benchmarks
+  - cabal-1.18 configure -v2 --enable-tests
   - cabal-1.18 build
   - cabal-1.18 test
   - cabal-1.18 bench

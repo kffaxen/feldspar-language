@@ -132,7 +132,6 @@ import Feldspar.Core.Frontend.SourceInfo       as Frontend
 import Feldspar.Core.Frontend.Trace            as Frontend
 import Feldspar.Core.Frontend.Tuple            as Frontend
 
-
 prjDict :: PrjDict (Decor Info FeldDomain)
 prjDict = PrjDict
     (prjVariable prjDictFO . decorExpr)
@@ -161,7 +160,7 @@ reifyFeld :: SyntacticFeld a
     -> ASTF (Decor Info FeldDomain) (Internal a)
 reifyFeld n = flip evalState 0 .
     (   return
-    <=< codeMotion prjDict mkId
+    <=< codeMotion (simpleMatch (const . hoistOver)) prjDict mkId
     .   optimize
     .   targetSpecialization n
     <=< reifyM

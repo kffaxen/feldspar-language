@@ -50,9 +50,6 @@ module Feldspar.Core.Reify
        , SugarF
        , sugarSym
        , unFull
-       , astfOp
-       , astfApp
-       , astfFull
        , value
        ) where
 
@@ -201,15 +198,6 @@ unFull :: FFF a -> a
 unFull (FFF x) = x
 
 type RCSExpr a = CSEExpr (Expr a)
-
-astfApp :: (RCSExpr (a -> b), Int) -> ASTF a -> (RCSExpr b, Int)
-astfApp (cf,jf) (ASTF ca ja) = (applyCSE cf ca, max jf ja)
-
-astfOp :: Typeable a => Op a -> (RCSExpr a, Int)
-astfOp op = ((M.empty, Operator op), 0)
-
-astfFull :: TypeF a => (RCSExpr a, Int) -> ASTF a
-astfFull = full
 
 -- | Support for the overloaded sugarSym function
 class SugarF a where
